@@ -15,6 +15,14 @@ library(tidyverse);
 
 What are three ways that we can assign the value of 25 to y?
 
+Answer:
+
+```r
+y = 25
+y <- 25
+assign("y", 25)
+print(y)
+```
 ## Question 2
 
 How would I print the following line, including the quotes, in R?\
