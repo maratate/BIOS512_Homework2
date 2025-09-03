@@ -32,7 +32,7 @@ How would I print the following line, including the quotes, in R?\
 
 Answer:
 ```{r}
-print('He said, "I\'m Garth Marenghi. Author. Dreamweaver. Visionary. Plus actor."')
+cat('He said, "I\'m Garth Marenghi. Author. Dreamweaver. Visionary. Plus actor."')
 ```
 
 ## Question 3
@@ -42,7 +42,7 @@ What if I wanted to add backslashes into the statement from Question 2 to make t
 
 Answer:
 ```{r}
-print('He said, "I\'m Garth Marenghi. Author\\\\Dreamweaver\\\\Visionary. Plus actor."')
+cat('He said, "I\'m Garth Marenghi. Author\\\\Dreamweaver\\\\Visionary. Plus actor."')
 ```
 
 ## Question 4
@@ -144,13 +144,31 @@ counter_from_1()
 counter_from_1()
 ```
 Answer:
-
-
+The second version on the counter works.
+In the counter1 function, val is being created in the temporary enviornemnt that appears when counter1 is called. When it assigns val <- val + step, it creates a new local val inside the inner function, but doesn't change the previous val. So, every time you call the function, it starts from the same val and never counts higher.
+The counter2 function uses the double arrow which tells R to update val in the environment above so it its updated each time it is called.
 
 ## Question 10
 
 a)  Use read_csv the cars.csv and store it in a data frame.
 b)  Then, group the data frame by Make, get averages across the numeric variables, and then sort by Volume in descending order. Hint: Use summarise(across(c(<variable list>), mean)) to get the averages.
+
+Answer:
+```{r}
+library(readr) 
+library(dplyr)
+
+df <- read_csv("cars.csv")
+
+numeric_vars <- df %>%
+  select(where(is.numeric)) %>%
+  colnames()
+
+summary_df <- cars_df %>%
+  group_by(Make) %>%
+  summarise(across(all_of(numeric_vars), mean, na.rm = TRUE)) %>%
+  arrange(desc(Volume))
+```
 
 ## Question 11
 
